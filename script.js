@@ -1,5 +1,8 @@
 const poke_container = document.getElementById('poke-container')
-const pokemon_count = 150
+const pokemon_count = 151
+const SEARCH_API = 'https://pokeapi.co/api/v2/pokemon/'
+const form = document.getElementById('form')
+const search = document.getElementById('search')
 const colors = {
     fire: '#FDDFDF',
     grass: '#DEFDE0',
@@ -14,10 +17,15 @@ const colors = {
 	psychic: '#eaeda1',
 	flying: '#F5F5F5',
 	fighting: '#E6E0D4',
-	normal: '#F5F5F5'
+	normal: '#F5F5F5',
+	dark: 'rgba(0, 0, 0, 0.5)',
+	steel: '#F5F5F5',
+	ice: '#DEF3FD'
 }
 
 const main_types = Object.keys(colors)
+
+
 
 const fetchPokemon = async () => {
     for(let i = 1; i <= pokemon_count; i++){
@@ -32,6 +40,8 @@ const getPokemon = async (id) =>{
     createPokemonCard(data)
 }
 
+fetchPokemon()
+
 const createPokemonCard = (pokemon) =>{
 	const pokemonEl = document.createElement('div')
 	pokemonEl.classList.add('pokemon')
@@ -43,7 +53,7 @@ const createPokemonCard = (pokemon) =>{
 	const type = main_types.find(type => pokemon_types.indexOf(type) > -1)
 
 	const color = colors[type]
-
+	
 	pokemonEl.style.backgroundColor = color
 
 	const pokemonInnerHTML = `
@@ -54,6 +64,8 @@ const createPokemonCard = (pokemon) =>{
 		<span class="number">#${id}</span>
 		<h3 class="name">${name}</h3>
 		<small class="type">Type: <span>${type}</span></small>
+		<small class="ability">Ability:<span> ${pokemon.abilities[0].ability.name}</span></small>
+		<small class="ability"><span>Move:${pokemon.moves[0].move.name}</span></small>
  	</div>
 	`
 
@@ -62,4 +74,30 @@ const createPokemonCard = (pokemon) =>{
 	poke_container.appendChild(pokemonEl)
 }
 
-fetchPokemon()
+
+
+async function getPokemonSearch(url){
+    const res = await fetch(url)
+    const data = await res.json()
+
+    createPokemonCard(data)
+}
+
+form.addEventListener('submit', (e) =>{
+
+    e.preventDefault()
+
+    const searchTerm = search.value 
+
+    if(searchTerm && searchTerm !== ''){
+		poke_container.innerHTML = ''
+        getPokemonSearch(SEARCH_API + searchTerm)
+
+        search.value = ''
+    }
+    else{
+        window.location.reload()
+    }
+
+})
+

@@ -14,6 +14,21 @@ body{
     margin: 0;
 }
 
+header {
+    padding: 1rem;
+    display: flex;
+    margin-left: auto;
+}
+.search{
+    background-color: transparent;
+    border: 2px solid black;
+    border-radius: 60px;
+    font-family: inherit;
+    font-size: 1rem;
+    padding: .5rem 1rem;
+    color: black;
+}
+
 h1{
     letter-spacing: 3px;
 }
@@ -51,6 +66,8 @@ h1{
 
 .pokemon .info{
     margin-top: 15px;
+    display: flex;
+    flex-direction: column;
 }
 .pokemon .info .number{
     background-color: rgba(0, 0, 0, 0.1);
@@ -62,3 +79,8 @@ h1{
     margin: 15px 0 7px;
     letter-spacing: 1px;
 }
+
+.pokemon .info .ability{
+    font-size: .7rem;
+}
+
