@@ -87,11 +87,11 @@ form.addEventListener('submit', (e) =>{
 
     e.preventDefault()
 
-    const searchTerm = search.value 
+    let searchTerm = search.value 
 
     if(searchTerm && searchTerm !== ''){
 		poke_container.innerHTML = ''
-        getPokemonSearch(SEARCH_API + searchTerm)
+        getPokemonSearch(SEARCH_API + searchTerm.toLowerCase())
 
         search.value = ''
     }
